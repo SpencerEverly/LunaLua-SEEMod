@@ -1,0 +1,1166 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<style>
+* {
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	font-family: Arial, Helvetica, sans-serif;	
+}
+
+h1 {
+	text-align: center;	
+}
+
+.over_title {
+	font-size: 1.2em;
+	font-weight: bold;
+}
+
+#content {
+	margin: auto 20px 50px 20px;	
+}
+
+.code {	
+	font-family: "Courier New", Courier, monospace;
+	width: 100%;
+	height: 100%;
+}
+
+#eventwrapper {
+	color: #000;
+	background-color: #9FFFB0;
+}
+
+#classwrapper {
+	color: #000;
+	background-color: #DFF4A8;
+}
+
+#globalwrapper {
+	color: #000;
+	background-color: #F9AAA8;
+}
+
+#constantwrapper {
+	color: #000;
+	background-color: #A38EFF;
+}
+
+#lapis {
+	color: #000;
+	background-color: #FFC286;
+	padding: 0px 30px;
+}
+
+#lapis #lapisglobalwrapper {
+	color: #000;
+	background-color: #F9AAA8;
+}
+
+
+</style>
+<title>Lunadll for Lua Reference</title>
+</head>
+<body>
+<h1>LunaDll for Lua Tutorial/Reference</h1><br /><br />
+
+<div id="content">
+	<div id="eventwrapper">
+	<p class="over_title">Events:</p>
+    <p>Events are called by Lunadll if they exsist in the lua code. Note: Not all parameters have to be set, you can just ignore them, if you want to. But the order is always the same. So if you need parameter 2 you have to write parameter 1 too!</p>
+    <hr />
+    <table border="1" width="100%">
+      <tr>
+        <th>Function Signature</th>
+        <th>Info</th>
+      </tr>
+      <tr>
+        <td>
+          <div class="code">
+    	    <p>function onLoad()</p>
+   	        <p>&nbsp;</p>
+    	    <p>end</p>
+          </div>
+        </td>
+        <td><p><b>onLoad</b> is called when the level editor or the game engine loads the level.</p></td>
+      </tr>
+      <tr>
+        <td>
+          <div class="code">
+    	    <p>function onLoop()</p>
+   	        <p>&nbsp;</p>
+    	    <p>end</p>
+          </div>
+        </td>
+        <td>On each frame while the game runs <b>onLoop</b> is called.</td>
+      </tr>
+      <tr>
+        <td>
+          <div class="code">
+    	    <p>function onLoopSection#()</p>
+   	        <p>&nbsp;</p>
+    	    <p>end</p>
+          </div>
+        </td>
+        <td>On each frame while the game runs in the specific section # <b>onLoopSection#</b> is called. Replace # with the sectionnumber 0-20. </td>
+      </tr>
+      <tr>
+        <td>
+          <div class="code">
+    	    <p>function onLoadSection()</p>
+   	        <p>&nbsp;</p>
+    	    <p>end</p>
+          </div>
+        </td>
+        <td>In the first frameloop of a new section <b>onLoadSection</b> is called. </td>
+      </tr>
+      <tr>
+        <td>
+          <div class="code">
+    	    <p>function onLoadSection#()</p>
+   	        <p>&nbsp;</p>
+    	    <p>end</p>
+          </div>
+        </td>
+        <td>In the first frameloop of  section # <b>onLoadSection#</b> is called.  Replace # with the sectionnumber 0-20.</td>
+      </tr>
+      <tr>
+        <td><div class="code">
+          <p>function onJump([int] playerIndex)</p>
+          <p>&nbsp;</p>
+          <p>end</p>
+        </div></td>
+        <td><p>When the player starts to jump, <b>onJump</b> is called.</p>
+        <p>playerIndex is the index of the player (Player 1: playerIndex = 1; Player 2: playerIndex = 2).</p></td>
+      </tr>
+      <tr>
+        <td><div class="code">
+          <p>function onJumpEnd([int] playerIndex)</p>
+          <p>&nbsp;</p>
+          <p>end</p>
+        </div></td>
+        <td><p>When the player hits the surface (jump ends), <b>onJumpEnd</b> is called.</p>
+        <p>playerIndex is the index of the player (Player 1: playerIndex = 1; Player 2: playerIndex = 2).</p></td>
+      </tr>
+      <tr>
+        <td><div class="code">
+          <p>function onKeyDown([int] keycode, [int] playerIndex)</p>
+          <p>&nbsp;</p>
+          <p>end</p>
+<p>&nbsp;</p>
+</div></td>
+        <td><p>When a key is getting hit, <b>onKeyDown</b> is called. Keycode can be compared with the constants.</p>
+        <p>playerIndex is the index of the player (Player 1: playerIndex = 1; Player 2: playerIndex = 2).</p></td>
+      </tr>
+      <tr>
+        <td><div class="code">
+          <p>function onKeyUp([int] keycode, [int] playerIndex)</p>
+          <p>&nbsp;</p>
+          <p>end</p>
+        </div></td>
+        <td><p>When a key is getting released, <b>onKeyUp</b> is called. Keycode can be compared with the constants.</p>
+        <p>playerIndex is the index of the player (Player 1: playerIndex = 1; Player 2: playerIndex = 2).</p></td>
+      </tr>
+    </table>
+    </div>
+    
+    <hr />
+    <br></br>
+  <div id="classwrapper">
+    <p class="over_title">Classes:</p>
+    <p>Classes are holding a bunch of functions, fields, ect... for a specific object type.
+    They can be constructed or returned by a global function.</p>
+    <p><b>NOTE:</b> The square brackets &quot;[]&quot; are used to indicate the return-type/param and are not part of the actual code. In lua, variables are defined without a variable-type.</p>
+    <table border="1" width="100%">
+      <tr>
+        <th colspan="2">The <u>RECT</u> Structure</th>
+      </tr>
+      <tr>
+        <th>Function Signature</th>
+        <th>Info</th>
+      </tr>
+      <tr>
+        <td>
+          <div class="code">
+    	    <p>myRect = RECT()</p>
+          </div>
+        </td>
+        <td><p>Constructs a new RECT structure.</p></td>
+      </tr>
+      <tr>
+        <td><div class="code">
+          <p>[int] myRect.left</p>
+        </div></td>
+        <td>The &quot;left&quot; value of the RECT structure.</td>
+      </tr>
+      <tr>
+        <td><div class="code">
+          <p>[int] myRect.top</p>
+        </div></td>
+        <td>The &quot;top&quot; value of the RECT structure.</td>
+      </tr>
+      <tr>
+        <td><div class="code">
+          <p>[int] myRect.right</p>
+        </div></td>
+        <td>The &quot;right&quot; value of the RECT structure.</td>
+      </tr>
+      <tr>
+        <td><div class="code">
+          <p>[int] myRect.bottom</p>
+        </div></td>
+        <td>The &quot;bottom&quot; value of the RECT structure.</td>
+      </tr>
+      <tr>
+        <td colspan="2"><p>This class provides fields to save &quot;left&quot;, &quot;top&quot;, &quot;right&quot;, &quot;bottom&quot; as a int value. It is common used by other classes.</p></tr>
+    </table>
+    <p>&nbsp;</p>
+    <table width="100%" border="1">
+      <tr>
+        <th colspan="2">The <u>RECTd</u> Structure</th>
+      </tr>
+      <tr>
+        <th>Function Signature</th>
+        <th>Info</th>
+      </tr>
+      <tr>
+        <td><div class="code">
+          <p>myRect = RECTd()</p>
+        </div></td>
+        <td><p>Constructs a new RECT structure.</p></td>
+      </tr>
+      <tr>
+        <td><div class="code">
+          <p>[double] myRect.left</p>
+        </div></td>
+        <td>The &quot;left&quot; value of the RECT structure.</td>
+      </tr>
+      <tr>
+        <td><div class="code">
+          <p>[double] myRect.top</p>
+        </div></td>
+        <td>The &quot;top&quot; value of the RECT structure.</td>
+      </tr>
+      <tr>
+        <td><div class="code">
+          <p>[double] myRect.right</p>
+        </div></td>
+        <td>The &quot;right&quot; value of the RECT structure.</td>
+      </tr>
+      <tr>
+        <td><div class="code">
+          <p>[double] myRect.bottom</p>
+        </div></td>
+        <td>The &quot;bottom&quot; value of the RECT structure.</td>
+      </tr>
+      <tr>
+        <td colspan="2"><p>Same as RECT, just with double values.</p></td>
+      </tr>
+    </table>
+    <p>&nbsp;</p>
+    <p><br />
+    </p>
+    <table border="1" width="100%">
+      <tr>
+        <th colspan="2">The <u>Section</u> Class</th>
+      </tr>
+      <tr>
+        <th>Function Signature</th>
+        <th>Info</th>
+      </tr>
+      <tr>
+        <td><div class="code">
+          <p>mySection = Section([int] sectionnum)</p>
+        </div></td>
+        <td><p>Constructs a new section class by the sectionnumber.</p></td>
+      </tr>
+      <tr>
+        <td><div class="code">
+          <p>[RECTd] mySection.boundary</p>
+        </div></td>
+        <td>Holds the values for the section boundaries.</td>
+      </tr>
+      <tr>
+        <td colspan="2"><p>This class provides fields and functions to modify the section.</p></td>
+      </tr>
+    </table>
+    <p><br />
+  </p>
+    <table border="1" width="100%">
+      <tr>
+        <th colspan="2">The <u>NPC</u> Class</th>
+      </tr>
+      <tr>
+        <th>Function Signature</th>
+        <th>Info</th>
+      </tr>
+      <tr>
+        <td>
+          <div class="code">
+    	    <p>myNPC = NPC([int] arrayindex)</p>
+          </div>
+        </td>
+        <td><p>Constructs a new NPC via internal arrayindex.</p>
+        <p>NOTE: Do not construct directly. Use function &quot;<strong>npcs()</strong>&quot; or &quot;<strong>findnpcs([int],[int])</strong>&quot; instead!</p></td>
+      </tr>
+      <tr>
+        <td><div class="code">
+          <p>[double] myNPC.x</p>
+        </div></td>
+        <td>The x value of the npc.</td>
+      </tr>
+      <tr>
+        <td><div class="code">
+          <p>[double] myNPC.y</p>
+        </div></td>
+        <td>The y value of the npc.</td>
+      </tr>
+      <tr>
+        <td><div class="code">
+          <p>[double] myNPC.speedX</p>
+        </div></td>
+        <td>The x speed value of the npc.</td>
+      </tr>
+      <tr>
+        <td><div class="code">
+          <p>[double] myNPC.speedY</p>
+        </div></td>
+        <td>The y speed value of the npc.</td>
+      </tr>
+      <tr>
+        <td><div class="code">
+          <p>[int] myNPC.id</p>
+        </div></td>
+        <td>The npc-id of the npc.</td>
+      </tr>
+      <tr>
+        <td><div class="code">
+          <p>[int] myNPC.direction</p>
+        </div></td>
+        <td><p>The face direction of the npc.</p>
+        <p><strong>NOTE:</strong> Setting the direction of a npc, resets the monumentum of the npc. You can modify the speedX value if you want to set your own monumentum.</p></td>
+      </tr>
+      <tr>
+        <td><div class="code">
+          <p>myNPC:mem([hex/int] address-offset, [int] datatype, [any] value)</p>
+        </div></td>
+        <td>Sets a NPC offset-address to a specfic value. See constants for datatypes.</td>
+      </tr>
+      <tr>
+        <td><div class="code">
+          <p>[any] myNPC:mem([hex/int] address, [int] datatype)</p>
+        </div></td>
+        <td>Gets a specfic value by NPC offset-address. See constants for datatypes.</td>
+      </tr>
+      <tr>
+        <td><div class="code">
+          <p>myNPC:kill()</p>
+        </div></td>
+        <td>Kills the npc with the standard kill animation.</td>
+      </tr>
+      <tr>
+        <td><div class="code">
+          <p>myNPC:kill([int] killanimation)</p>
+        </div></td>
+        <td><p>Kills the npc with the kill animation of your choice.</p>
+        <p>Known ids are:</p>
+        <p>1 - Standard kill animation</p>
+        <p>6 - Lava kill</p>
+        <p>8 - Spin jump kill</p>
+        <p>9 - dissapear (no animation)</p>
+        <p>10 - Link kill (like link would kill this npc)</p></td>
+      </tr>
+      <tr>
+        <td colspan="2"><p>This class provides fields and functions to modify the npc. It is <strong>not recommended</strong> to save this class for later, as the internal arrayindex changes when enemies get killed. </p></tr>
+    </table>
+    <br /><br />
+    <table border="1" width="100%">
+      <tr>
+        <th colspan="2">The <u>Player</u> Class</th>
+      </tr>
+      <tr>
+        <th>Function Signature</th>
+        <th>Info</th>
+      </tr>
+      <tr>
+        <td><div class="code">
+          <p>player = Player()</p>
+        </div></td>
+        <td><p>Constructs a new Player class. All constructed players will always point to the first player.</p>
+          <p><b>NOTE:</b> It is recommended to use the constant &quot;<strong>player</strong>&quot; and/or &quot;<strong>player2</strong>&quot; (for second player) instead of constructing an own one. </p></td>
+      </tr>
+      <tr>
+        <td>
+          <div class="code">
+    	    <p>player = Player([int] playerindex)</p>
+          </div>
+        </td>
+        <td><p>Constructs a player with the specific playerindex. To check if valid use if(player.isValid)! Player 1 has playerindex = 1 and Player 2 has playerindex = 2</p></td>
+      </tr>
+      <tr>
+        <td><div class="code">
+          <p>player:kill()</p>
+        </div></td>
+        <td>Kills the player.</td>
+      </tr>
+      <tr>
+        <td><div class="code">
+          <p>player:harm()</p>
+        </div></td>
+        <td>Harms the player (get a fake hit)</td>
+      </tr>
+      <tr>
+        <td><div class="code">
+          <p>[double] player.x</p>
+        </div></td>
+        <td>The x value of the player.</td>
+      </tr>
+      <tr>
+        <td><div class="code">
+          <p>[double] player.y</p>
+        </div></td>
+        <td>The y value of the player.</td>
+      </tr>
+      <tr>
+        <td><div class="code">
+          <p>[double] player.speedX</p>
+        </div></td>
+        <td>The x speed value of the player.</td>
+      </tr>
+      <tr>
+        <td><div class="code">
+          <p>[double] player.speedY</p>
+        </div></td>
+        <td>The y speed value of the player.</td>
+      </tr>
+      <tr>
+        <td><div class="code">
+          <p>[int] player.powerup</p>
+        </div></td>
+        <td>The powerup value of the player.</td>
+      </tr>
+      <tr>
+        <td><div class="code">
+          <p>[int] player.reservePowerup</p>
+        </div></td>
+        <td>The npc-id of the reserve powerup box.</td>
+      </tr>
+      <tr>
+        <td><div class="code">
+          <p>[int(readonly)] player.section</p></div></td>
+        <td>The current section of the player.</td>
+      </tr>
+      <tr>
+        <td><div class="code">
+          <p>[Section(readonly)] player.sectionObj</p>
+        </div></td>
+        <td>Returns the current section in a section object.</td>
+      </tr>
+      <tr>
+        <td><div class="code">
+          <p>[class RECT(readonly)] player.screen</p>
+        </div></td>
+        <td>The player RECT to the screen.</td>
+      </tr>
+      <tr>
+        <td><div class="code">
+          <p>[class NPC(readonly) or nil] player.holdingNPC</p>
+        </div></td>
+        <td>If the player holds the npc, it returns the NPC</td>
+      </tr>
+      <tr>
+        <td><div class="code">
+          <p>player:mem([hex/int] address-offset, [int] datatype, [any] value)</p>
+        </div></td>
+        <td>Sets a player offset-address to a specfic value. See constants for datatypes.</td>
+      </tr>
+      <tr>
+        <td><div class="code">
+          <p>[any] player:mem([hex/int] address, [int] datatype)</p>
+        </div></td>
+        <td>Gets a specfic value by player offset-address. See constants for datatypes.</td>
+      </tr>
+      <tr>
+        <td><div class="code">
+          <p>[boolean] player.isValid</p>
+        </div></td>
+        <td>If this instance is valid. Good for checking if a second player exsist. </td>
+      </tr>
+      <tr>
+        <td colspan="2"><p align="center"><a href="struct_Player.txt" target="_blank">View raw fields</a></p>
+        <p>Raw fields can be accessed like normal fields with read/write access, but there is no support (no constants, read-limiting, ect...) given. </p>
+        <p>They are <strong>not camel-case formatted</strong>!</p></td>
+      </tr>
+      <tr>
+        <td colspan="2"><p>This class provides fields and functions to modify the player/character.</p>
+          <p><b>NOTE</b>: It is recommended to use the constant &quot;<strong>player</strong>&quot; instead of constructing an own one. </p></td>
+      </tr>
+    </table>
+    </div>
+	<p><br />
+	  <br />
+      <div id="globalwrapper">
+  <span class="over_title">Global functions:</span></p>
+  <p>Functions which can be globally accessed. They don't need any class to run.</p>
+    <hr />
+    <table border="1" width="100%">
+      <tr>
+        <th>Function Signature</th>
+        <th>Info</th>
+      </tr>
+      <tr>
+        <td><div class="code">
+          <p>windowDebug([string] text)</p>
+        </div></td>
+        <td><p>Displays a message box with the text provided.</p></td>
+      </tr>
+      <tr>
+        <td><div class="code">
+          <p>printText([string] text, [int] x, [int] y)</p>
+        </div></td>
+        <td>Displays text at x,y with the font-type 3.</td>
+      </tr>
+      <tr>
+        <td><div class="code">
+          <p>printText([string] text, [int] font-type, [int] x, [int y]</p>
+        </div></td>
+        <td>Displays text at x,y with the font-type of your choice.</td>
+      </tr>
+      <tr>
+        <td><div class="code">
+          <p>[int] totalNPC()</p>
+        </div></td>
+        <td>Returns the number of NPCs in this level.</td>
+      </tr>
+      <tr>
+        <td><div class="code">
+          <p>[NPC (array)] npcs()</p>
+        </div></td>
+        <td>Returns an array with all NPCs in this level.</td>
+      </tr>
+      <tr>
+        <td><div class="code">
+          <p>[NPC (array)] findnpcs([int] npc-id, [int] section)</p>
+        </div></td>
+        <td>Returns an array filtered to npc-id and/or section. Use -1 or FIND_ANY to skip one of either filter.</td>
+      </tr>
+      <tr>
+        <td><div class="code">
+          <p>mem([hex/int] address, [int] datatype, [any] value)</p>
+        </div></td>
+        <td>Sets a global address to a specfic value. See constants for datatypes.</td>
+      </tr>
+      <tr>
+        <td><div class="code">
+          <p>[any] mem([hex/int] address, [int] datatype)</p></div></td>
+        <td>Gets a specfic value by address. See constants for datatypes.</td>
+      </tr>
+      <tr>
+        <td><div class="code">
+          <p>playSFX([int] soundid)</p>
+        </div></td>
+        <td>Plays the given sound by sound-id.</td>
+      </tr>
+      <tr>
+        <td><div class="code">
+          <p>playSFX([string] soundfile)</p>
+        </div></td>
+        <td>Plays the given sound by soundfile.</td>
+      </tr>
+      <tr>
+        <td height="25"><div class="code">
+          <p>triggerEvent([string] eventname)</p>
+        </div></td>
+        <td>Runs a event by eventname.</td>
+      </tr>
+      <tr>
+        <td height="25"><div class="code">
+          <p>playMusic([int] section)</p>
+        </div></td>
+        <td>Plays the music for <strong>section</strong>.</td>
+      </tr>
+      <tr>
+        <td height="25"><div class="code">
+          <p>loadImage([string] filename, [int] resourceNumber, [hex/int] transperentColor)</p>
+        </div></td>
+        <td><p>Loads a image by filename into resourceNumber.</p>
+        <p>&nbsp;</p></td>
+      </tr>
+      <tr>
+        <td height="25"><div class="code">
+          <p>placeSprite([int] type, [int] imgResource, [int] xPos, [int] yPos)</p>
+        </div></td>
+        <td>Places a image/sprite by resource-number imgResource at xPos, yPos.</td>
+      </tr>
+      <tr>
+        <td height="25"><div class="code">
+          <p>placeSprite([int] type, [int] imgResource, [int] xPos, [int] yPos, [string] extra)</p>
+        </div></td>
+        <td>Places a image/sprite by resource-number imgResource at xPos, yPos. Extra string data field provided. Leave a empty string if not used.</td>
+      </tr>
+      <tr>
+        <td height="25"><div class="code">
+          <p>placeSprite([int] type, [int] imgResource, [int] xPos, [int] yPos, [string] extra, [int] time)</p>
+        </div></td>
+        <td>Places a image/sprite by resource-number imgResource at xPos, yPos. Extra string data field provided. Leave a empty string if not used. You can set the time if needed.</td>
+      </tr>
+      <tr>
+        <td height="25"><div class="code">
+          <p>[int] gravity()</p>
+        </div></td>
+        <td>Returns the gravity in this level. 12 = Default</td>
+      </tr>
+      <tr>
+        <td height="25"><div class="code">
+          <p>gravity([int] value)</p>
+        </div></td>
+        <td>Sets the gravity in this level. 12 = Default</td>
+      </tr>
+      <tr>
+        <td height="25"><div class="code">
+          <p>[int] earthquake()</p>
+        </div></td>
+        <td>Returns the earthquake-effect in this level. 0 = No earth quake. Resets to 0 after a time. Higher number = Higher earthquake-effect.</td>
+      </tr>
+      <tr>
+        <td height="25"><div class="code">
+          <p>earthquake([int] value)</p>
+        </div></td>
+        <td>Sets the earthquake-effect in this level. 0 = No earth quake. Resets to 0 after a time. Higher number = Higher earthquake-effect.</td>
+      </tr>
+      <tr>
+        <td height="25"><div class="code">
+          <p>[int] jumpheight()</p>
+        </div></td>
+        <td>Returns the jumpheight-factor of every character. 20 = Default</td>
+      </tr>
+      <tr>
+        <td height="25"><div class="code">
+          <p>jumpheight([int] value)</p>
+        </div></td>
+        <td>Sets the jumpheight-factor of every character. 20 = Default</td>
+      </tr>
+      <tr>
+        <td height="25"><div class="code">
+          <p>[int] jumpheightBounce()</p>
+        </div></td>
+        <td>Returns the jumpheight-factor (when bounced off from a npc) of every character. 20 = Default</td>
+      </tr>
+      <tr>
+        <td height="25"><div class="code">
+          <p>jumpheightBounce([int] value)</p>
+        </div></td>
+        <td>Sets the jumpheight-factor (when bounced off from a npc) of every character. 20 = Default</td>
+      </tr>
+    </table>
+    <p>&nbsp;</p>
+    <table width="100%" border="1">
+      <tr>
+        <th colspan="2">Group: UserData</th>
+      </tr>
+      <tr>
+        <th>Function Signature</th>
+        <th>Info</th>
+      </tr>
+      <tr>
+        <td><div class="code">
+          <p>UserData.setValue([string] key, [double] value)</p>
+        </div></td>
+        <td><p>Sets a double value by the given key.</p></td>
+      </tr>
+      <tr>
+        <td><div class="code">
+          <p>[double/nil] UserData.getValue([string] key)</p>
+        </div></td>
+        <td>Returns the value by the given key. If the value doesn't exsist, nil is returned.</td>
+      </tr>
+      <tr>
+        <td><div class="code">
+          <p>[table] UserData.values()</p>
+        </div></td>
+        <td>Returns a copy of all values with the keys.</td>
+      </tr>
+      <tr>
+        <td><div class="code">
+          <p>[boolean] UserData.isValueSet([string] key)</p>
+        </div></td>
+        <td>Returns true if the value exsist.</td>
+      </tr>
+      <tr>
+        <td><div class="code">
+          <p>UserData.save()</p>
+        </div></td>
+        <td>Saves the variable bank into the file.</td>
+      </tr>
+      <tr>
+        <td colspan="2"><p>This funtion group provides functions to load/save [double] values into the variable bank. You can then save it for later use, even after the game restarted.</p>
+        <p><strong>NOTE:</strong> Don't forget to save! It doesn't save automatically! Call UserData.save() for saving into the file.</p></td>
+      </tr>
+    </table>
+    </div>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <div id="constantwrapper">
+    <p><span class="over_title">Constants:</span></p>
+    <p>Constants are variables which hold values for specifc functions.</p>
+    <hr />
+    <table border="1" width="100%">
+      <tr>
+        <th>Constant</th>
+        <th>Recommended use</th>
+        <th>Info</th>
+      </tr>
+      <tr>
+        <td><div class="code">
+          <p>player</p>
+        </div></td>
+        <td><div class="code">
+          <p>---</p>
+        </div></td>
+        <td><p>An instance of player 1</p></td>
+      </tr>
+      <tr>
+        <td><div class="code">
+          <p>player2</p>
+        </div></td>
+        <td><div class="code">
+          <p>---</p>
+        </div></td>
+        <td><p>An instance of player 2. (Only if 2-player mode) You can check with 'if(player2)then' to be sure if a second player exsist.</p></td>
+      </tr>
+      <tr>
+        <td><div class="code">
+          <p>FIND_ANY</p>
+        </div></td>
+        <td><div class="code">
+          <p>function npcread</p>
+        </div></td>
+        <td><p>Ignores the filter of npcread</p></td>
+      </tr>
+      <tr>
+        <td><div class="code">
+          <p>DIR_RIGHT</p>
+        </div></td>
+        <td><div class="code">
+          <p>myNPC.direction</p>
+        </div></td>
+        <td>Direction right</td>
+      </tr>
+      <tr>
+        <td><div class="code">
+          <p>DIR_RANDOM</p></div></td>
+        <td><div class="code">
+          <p>myNPC.direction</p>
+        </div></td>
+        <td>Direction random</td>
+      </tr>
+      <tr>
+        <td><div class="code">
+          <p>DIR_LEFT</p></div></td>
+        <td><div class="code">
+          <p>myNPC.direction</p>
+        </div></td>
+        <td>Direction left</td>
+      </tr>
+      <tr>
+        <td><div class="code">
+          <p>PLAYER_SMALL</p>
+        </div></td>
+        <td><div class="code">
+          <p>player.powerup</p>
+        </div></td>
+        <td>No powerup/Small</td>
+      </tr>
+      <tr>
+        <td><div class="code">
+          <p>PLAYER_BIG</p>
+        </div></td>
+        <td><div class="code">
+          <p>player.powerup</p>
+        </div></td>
+        <td>Mushroom powerup/Big</td>
+      </tr>
+      <tr>
+        <td><div class="code">
+          <p>PLAYER_FIREFLOWER</p>
+        </div></td>
+        <td><div class="code">
+          <p>player.powerup</p>
+        </div></td>
+        <td>Fireflower powerup</td>
+      </tr>
+      <tr>
+        <td><div class="code">
+          <p>PLAYER_LEAF</p>
+        </div></td>
+        <td><div class="code">
+          <p>player.powerup</p>
+        </div></td>
+        <td>Leaf powerup</td>
+      </tr>
+      <tr>
+        <td><div class="code">
+          <p>PLAYER_TANOOKIE</p>
+        </div></td>
+        <td><div class="code">
+          <p>player.powerup</p>
+        </div></td>
+        <td>Tanookie powerup</td>
+      </tr>
+      <tr>
+        <td><div class="code">
+          <p>PLAYER_HAMMER</p>
+        </div></td>
+        <td><div class="code">
+          <p>player.powerup</p>
+        </div></td>
+        <td>Hammer powerup</td>
+      </tr>
+      <tr>
+        <td><div class="code">
+          <p>PLAYER_ICE</p>
+        </div></td>
+        <td><div class="code">
+          <p>player.powerup</p>
+        </div></td>
+        <td>Ice powerup</td>
+      </tr>
+      <tr>
+        <td><div class="code">
+          <p>FIELD_BYTE</p>
+        </div></td>
+        <td><div class="code">
+          <p>function mem</p>
+          <p>player:mem</p>
+          <p>myNPC:mem</p>
+        </div></td>
+        <td>Byte field data type</td>
+      </tr>
+      <tr>
+        <td><div class="code">
+          <p>FIELD_WORD</p>
+        </div></td>
+        <td><div class="code">
+          <p>function mem</p>
+          <p>player:mem</p>
+          <p>myNPC:mem</p>
+        </div></td>
+        <td>Word field data type</td>
+      </tr>
+      <tr>
+        <td><div class="code">
+          <p>FIELD_DWORD</p>
+        </div></td>
+        <td><div class="code">
+          <p>function mem</p>
+          <p>player:mem</p>
+          <p>myNPC:mem</p>
+        </div></td>
+        <td>DWord field data type</td>
+      </tr>
+      <tr>
+        <td><div class="code">
+          <p>FIELD_FLOAT</p>
+        </div></td>
+        <td><div class="code">
+          <p>function mem</p>
+          <p>player:mem</p>
+          <p>myNPC:mem</p>
+        </div></td>
+        <td>Float field data type</td>
+      </tr>
+      <tr>
+        <td><div class="code">
+          <p>FIELD_DFLOAT</p>
+        </div></td>
+        <td><div class="code">
+          <p>function mem</p>
+          <p>player:mem</p>
+          <p>myNPC:mem</p>
+        </div></td>
+        <td>DFloat field data type</td>
+      </tr>
+      <tr>
+        <td><div class="code">
+          <p>KEY_UP</p>
+        </div></td>
+        <td><div class="code">
+          <p>keycode</p>
+        </div></td>
+        <td>Up key</td>
+      </tr>
+      <tr>
+        <td><div class="code">
+          <p>KEY_DOWN</p>
+        </div></td>
+        <td><div class="code">
+          <p>keycode</p>
+        </div></td>
+        <td>Down key</td>
+      </tr>
+      <tr>
+        <td><div class="code">
+          <p>KEY_LEFT</p>
+        </div></td>
+        <td><div class="code">
+          <p>keycode</p>
+        </div></td>
+        <td>Left key</td>
+      </tr>
+      <tr>
+        <td><div class="code">
+          <p>KEY_RIGHT</p>
+        </div></td>
+        <td><div class="code">
+          <p>keycode</p>
+        </div></td>
+        <td>Right key</td>
+      </tr>
+      <tr>
+        <td><div class="code">
+          <p>KEY_JUMP</p>
+        </div></td>
+        <td><div class="code">
+          <p>keycode</p>
+        </div></td>
+        <td>Jump key</td>
+      </tr>
+      <tr>
+        <td><div class="code">
+          <p>KEY_SPINJUMP</p>
+        </div></td>
+        <td><div class="code">
+          <p>keycode</p>
+        </div></td>
+        <td>Spinjump key</td>
+      </tr>
+      <tr>
+        <td><div class="code">
+          <p>KEY_X</p>
+        </div></td>
+        <td><div class="code">
+          <p>keycode</p>
+        </div></td>
+        <td>x key</td>
+      </tr>
+      <tr>
+        <td><div class="code">
+          <p>KEY_RUN</p>
+        </div></td>
+        <td><div class="code">
+          <p>keycode</p>
+        </div></td>
+        <td>Run key</td>
+      </tr>
+      <tr>
+        <td><div class="code">
+          <p>KEY_SEL</p>
+        </div></td>
+        <td><div class="code">
+          <p>keycode</p>
+        </div></td>
+        <td>Sel key</td>
+      </tr>
+      <tr>
+        <td><div class="code">
+          <p>KEY_STR</p>
+        </div></td>
+        <td><div class="code">
+          <p>keycode</p>
+        </div></td>
+        <td>Str key</td>
+      </tr>
+    </table>
+    </div>
+    <br />
+    <div id="lapis">
+      <div align="center">
+        <p class="over_title">lapi.lua - Helper class written in lua</p>
+        
+      </div>
+      <p>&nbsp;</p>
+      <p>This is just a helper class. Even without it Lunadll+Lua can run, but may break codes which require this class to run!</p>
+      <p><br />
+      </p>
+      <div id="lapisglobalwrapper"> <span class="over_title">Global functions/features:</span>
+        </p>
+        <p>Functions/Features which can be globally accessed. They don't need any class to run.</p>
+        <hr />
+        <table border="1" width="100%">
+          <tr>
+            <th>Function Signature</th>
+            <th>Info</th>
+          </tr>
+          <tr>
+            <td><div class="code">
+              <p>uservar[[string]key] = [double] value</p>
+            </div></td>
+            <td><p>A fast way to set a variable in the variable bank.</p>
+            <p><strong>Example</strong>:</p>
+            <div class="code">
+              <p>uservar[&quot;Jumpcounter&quot;] = uservar[&quot;Jumpcounter&quot;] + 1</p>
+            </div>
+            <p>&nbsp;</p></td>
+          </tr>
+          <tr>
+            <td><div class="code">
+              <p>[double] value = uservar[[string]key]</p>
+            </div></td>
+            <td><p>A fast way to get a variable in the variable bank. If value doesn't exsist 0 is returned, <strong>not nil</strong>!</p>
+            <p><strong>Example</strong>:</p>
+            <div class="code">
+              <p>uservar[&quot;Jumpcounter&quot;] = uservar[&quot;Jumpcounter&quot;] + 1</p>
+            </div></td>
+          </tr>
+        </table>
+      </div>
+      <br />
+    </div>
+    <p>&nbsp;</p>
+    <p><span class="over_title">Examples:</span></p>
+  <table border="1" width="100%">
+      <tr>
+        <td><div class="code">
+          <p>function onLoop()<br />
+            &#160;&#160;allNPCs = findnpcs(20,player.section)<br />
+            &#160;&#160;for k,v in pairs(allNPCs) do<br />
+            &#160;&#160;&#160;&#160;if(v.direction == DIR_RIGHT)then<br />
+            &#160;&#160;&#160;&#160;&#160;&#160;v.speedX = 5<br />
+            &#160;&#160;&#160;&#160;else<br />
+          &#160;&#160;&#160;&#160;&#160;&#160;v.speedX = -5</p>
+          <p>&#160;&#160;&#160;&#160;end<br />
+            &#160;&#160;end<br />
+            end<br />
+          </p>
+        </div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <p>Info: Makes every blue Shy-Guy running super fast.</p>
+        </td>
+      </tr>
+    </table>
+	<p></p><br />
+  <table border="1" width="100%">
+      <tr>
+        <td><div class="code">
+          <p>i = 0</p>
+          <p>function onLoad()<br />
+            &#160;&#160;i = 0<br />
+            end</p>
+          <p>function onLoop()<br />
+            &#160;&#160;i = i + 1<br />
+            &#160;&#160;if(i % 100 == 0)then<br />
+            &#160;&#160;&#160;&#160;allNPCs = findnpcs(20,player.section)<br />
+            &#160;&#160;&#160;&#160;for k,v in pairs(allNPCs) do<br />
+            &#160;&#160;&#160;&#160;&#160;&#160;v.speedY = -8<br />
+            &#160;&#160;&#160;&#160;end<br />
+            &#160;&#160;end<br />
+            end<br />
+          </p>
+</div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <p>Info: Makes every blue Shy-Guy jump every 100 frames.</p>
+        </td>
+      </tr>
+    </table>
+    <p><br />
+    </p>
+  <table border="1" width="100%">
+      <tr>
+        <td><div class="code">
+          <p>function onLoop()<br />
+			&#160;&#160;if(player.y &gt; -200320)then<br />
+			&#160;&#160;&#160;&#160;player.speedY = -10<br />
+			&#160;&#160;end<br />
+			end<br />
+          </p>
+</div></td>
+      </tr>
+      <tr>
+        <td><p>Info: Let the player jump up when it reaches a specific y-value.</p></td>
+      </tr>
+    </table>
+    <p><br />
+    </p>
+  <table border="1" width="100%">
+      <tr>
+        <td><div class="code">
+          <p>i = 0</p>
+          <p>function onLoad()<br />
+            &#160;&#160;i = 0<br />
+            end</p>
+          <p>function onLoop()<br />
+            &#160;&#160;printText(&quot;RUNNING &quot;..tostring(i)..&quot; FRAMES&quot;, 30, 30)<br />
+            &#160;&#160;printText(&quot;PLAYER COOR &quot;..tostring(player.x)..&quot; &quot;..tostring(player.y), 30, 60)<br />
+          end</p>
+</div></td>
+      </tr>
+      <tr>
+        <td><p>Info: Some debug info.</p></td>
+      </tr>
+    </table>
+    <p><br />
+    </p>
+    <table border="1" width="100%">
+      <tr>
+        <td><div class="code">
+          <p>i = 0</p>
+          <p>function onLoad()<br />
+            &#160;&#160;i = 0<br />
+            end</p>
+          <p>function onLoop()<br />
+            &#160;&#160;i = i + 1<br />
+            &#160;&#160;if(i % 200 == 0)then<br />
+            &#160;&#160;&#160;&#160;player.powerup = math.random(1,7)<br />
+            &#160;&#160;end<br />
+          end<br />
+        </p>
+</div></td>
+      </tr>
+      <tr>
+        <td><p>Info: A new powerup every 200 frames (powerup roulett)</p></td>
+      </tr>
+    </table>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p><br />
+    </p>
+    <table border="1" width="100%">
+      <tr>
+        <td><div class="code">
+          <p>function onLoop()<br />
+&#160;&#160;if(UserData.getValue(&quot;jump-counter&quot;))then<br />
+&#160;&#160;&#160;&#160;printText(&quot;Jumps: &quot;..tostring(UserData.values()[&quot;jump-counter&quot;]), 30, 160) -- values()[value-Name] can be used too, to get the a value<br />
+&#160;&#160;end<br />
+end</p>
+          <p>function onJump(plIndex)<br />
+            &#160;&#160;if(UserData.getValue(&quot;jump-counter&quot;))then<br />
+            &#160;&#160;&#160;&#160;UserData.setValue(&quot;jump-counter&quot;, UserData.getValue(&quot;jump-counter&quot;)+1)<br />
+            &#160;&#160;else<br />
+            &#160;&#160;&#160;&#160;UserData.setValue(&quot;jump-counter&quot;, 1)<br />
+            &#160;&#160;end<br />
+            &#160;&#160;UserData.save()<br />
+          end</p>
+          <p><br />
+          </p>
+        </div></td>
+      </tr>
+      <tr>
+        <td><p>Info: A jump-counter with the new variable bank!</p></td>
+      </tr>
+    </table>
+</div>
+
+
+</body>
+</html>

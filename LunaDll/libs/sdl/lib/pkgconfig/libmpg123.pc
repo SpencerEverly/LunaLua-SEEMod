@@ -1,0 +1,12 @@
+prefix=C:/msys64/home/spenc/mixerx-install
+exec_prefix=C:/msys64/home/spenc/mixerx-install
+libdir=C:/msys64/home/spenc/mixerx-install/lib
+includedir=C:/msys64/home/spenc/mixerx-install/include
+
+Name: libmpg123
+Description: An optimised MPEG Audio decoder
+Requires: 
+Version: 1.29.3
+Libs: -L${libdir} -lmpg123 
+Libs.private: 
+Cflags: -I${includedir} 

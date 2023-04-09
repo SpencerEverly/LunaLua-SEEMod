@@ -1,0 +1,12 @@
+prefix=C:/msys64/home/spenc/mixerx-install
+exec_prefix=C:/msys64/home/spenc/mixerx-install
+libdir=C:/msys64/home/spenc/mixerx-install/lib
+includedir=C:/msys64/home/spenc/mixerx-install/include
+
+Name: libsyn123
+Description: A signal synthesis library accompanying mpg123
+Requires: 
+Version: 1.29.3
+Libs: -L${libdir} -lsyn123 
+Libs.private: 
+Cflags: -I${includedir} 

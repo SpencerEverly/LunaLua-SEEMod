@@ -1,0 +1,70 @@
+HOW TO BUILD SDL MIXER X
+----------
+
+Pre-Requisites
+----
+
+1. To install SDL2, do these things:
+(TBD)
+
+-------
+
+Building SDL Mixer X
+----
+
+Make sure WHERE you build the project DOESN'T have any folders with spaces!!!!
+
+1. Open up cmd (Command Prompt). Run it as an Admin just in case.
+
+2. Clone the following if you haven't yet:
+git clone https://github.com/WohlSoft/AudioCodecs.git
+git clone https://github.com/WohlSoft/SDL-Mixer-X.git
+
+3. Go to the AudioCodecs commit folder. 
+cd AudioCodecs
+
+4. Run the following:
+mkdir build
+cd build
+
+And then run this:
+cmake -DCMAKE_BUILD_TYPE=Release -DUSE_LOCAL_SDL2=ON -DCMAKE_INSTALL_PREFIX=../../mixerx-install .. -DYASM_ASSEMBLER="C:/Program Files (x86)/yasm" -G "Visual Studio 14 2015" -A Win32 ..
+
+5. Before we continue though, there will be some errors if running the building unmodified. This is because there are some errors when compiling the GME library, because "static_assert" information pertaining to the incorrect layout error of some files aren't written correctly. You should go into the following files and mark // at each line on the following files and lines:
+
+Ay_Emu.cpp - 131
+Gbs_Emu.cpp - 110
+Gym_Emu.cpp - 213
+Hes_Emu.cpp - 147
+Nsfe_Emu.cpp - 99
+Nsf_Emu.cpp - 333
+Spc_Emu.cpp - 419
+Vgm_Emu.cpp - 327
+
+Of course, building may vary since commit changes are bound to happen, so you may wanna build the project first to see if the lines match the readme. If not, do the lines cmake said.
+
+6. It should start making part of the build. Now run this after it's done:
+cmake --build . --config release --target install
+
+7. It should now build an SDL2.dll file into mixerx-install. Now type up the following:
+
+cd../.. (This backs out two folders)
+cd SDL-Mixer-X
+mkdir build
+cd build
+
+Then do this:
+cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=E:/Github/AudioCodecs -DAUDIO_CODECS_INSTALL_PATH=E:/Github/mixerx-install/ -DAUDIO_CODECS_REPO_PATH=E:/Github/AudioCodecs .. -DMIXERX_ENABLE_GPL=ON -G "Visual Studio 14 2015" -A Win32 ..
+
+8. From there, finally do this:
+cmake --build . --config release --target install
+
+9. SDL-Mixer-X should be spat out into the folder "SDL-Mixer-X-Final".
+
+10. We're not done yet. We gotta put the new DLL files into the SMBX2 SEE Mod, and also update the source code in the SEE Mod LunaLua architecture as well. First, copy the SDL2.dll file from "C:\(buildfolder)\AudioCodecs\build\bin" to the bin folder on your SMBX2 install. Also copy the file from "C:\(buildfolder)\SDL-Mixer-X-Final\bin" to the bin folder on your SMBX2 install. You also want to replace them on the LunaLua SEE Mod as well: "LunaLua-SEEMod-master\LunaDll\libs\sdl\bin" in case.
+
+11. We're now gonna update the code in the sdl folder. Copy the "include" and "lib" folders in "C:\(buildfolder)\mixerx-install" and paste them to where this is at in the LunaLua SEE Mod: "LunaLua-SEEMod-master\LunaDll\libs\sdl" and replace if it says so.
+
+12. Copy everything under "C:\(buildfolder)\mixerx-install\lib" and paste it to "LunaLua-SEEMod-master\LunaDll\libs\sdl\lib"
+
+13. Everything should now be good to go! You can rebuild the LunaLua project if you want, which should be recommended if you want the internal program to detect newer SDL Mixer X stuff.

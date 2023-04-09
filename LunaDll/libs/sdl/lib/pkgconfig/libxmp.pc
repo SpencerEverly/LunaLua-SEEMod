@@ -1,0 +1,13 @@
+prefix=C:/msys64/home/spenc/mixerx-install
+exec_prefix=${prefix}
+libdir=C:/msys64/home/spenc/mixerx-install/lib
+includedir=C:/msys64/home/spenc/mixerx-install/include
+
+Name: libxmp
+Description: Xmp module player library
+Version: 4.5.1
+
+Requires:
+Libs: -L${libdir} -lxmp
+Cflags: -I${includedir}
+Libs.private: 
