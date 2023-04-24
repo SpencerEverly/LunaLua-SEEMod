@@ -42,6 +42,7 @@ namespace LuaProxy
         double  MusicGetLoopLength();
         double  MusicGetTempo();
         double  MusicGetPitch();
+        double  MusicGetSpeed();
         void seizeStream(int section);
         void releaseStream(int section);
         void changeMusic(int section, const std::string &filename);

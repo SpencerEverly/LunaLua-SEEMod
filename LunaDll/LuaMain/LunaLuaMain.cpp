@@ -854,6 +854,7 @@ void CLunaLua::bindAll()
                 def("MusicGetLoopLength", (double(*)())&LuaProxy::Audio::MusicGetLoopLength),
                 def("MusicGetTempo", (double(*)())&LuaProxy::Audio::MusicGetTempo),
                 def("MusicGetPitch", (double(*)())&LuaProxy::Audio::MusicGetPitch),
+                def("MusicGetSpeed", (double(*)())&LuaProxy::Audio::MusicGetSpeed),
                 //Seize music stream for LUA usage for section 0..20
                 def("SeizeStream", (void(*)(int))&LuaProxy::Audio::seizeStream),
                 //Return music stream access to SMBX engine back for section 0..20
