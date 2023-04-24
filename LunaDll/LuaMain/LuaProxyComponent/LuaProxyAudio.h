@@ -15,15 +15,22 @@ namespace LuaProxy
         //Music
         void MusicOpen(const std::string& filename);
         void MusicPlay();
+        void MusicPlayStream();
+        void MusicChannelPause(int channel);
+        void MusicChannelResume(int channel);
+        void MusicChannelIsPaused(int channel);
         void MusicChannelAdd(const std::string& filename);
         void MusicRewind();
+        void MusicRewindStream();
         void MusicPlayFadeIn(int ms);
         void MusicStop();
         void MusicStopFadeOut(int ms);
         int  GetMusicVolume(void);
         void MusicVolume(int vlm);
         void MusicPause();
+        void MusicPauseStream();
         void MusicResume();
+        void MusicResumeStream();
         bool MusicIsPlaying();
         bool MusicIsPaused();
         bool MusicIsFading();
@@ -32,6 +39,9 @@ namespace LuaProxy
         std::string MusicArtistTag();
         std::string MusicAlbumTag();
         std::string MusicCopyrightTag();
+        void    MusicGetTracks();
+        void    MusicMuteTrackLayer(int trackNumber);
+        void    MusicUnmuteTrackLayer(int trackNumber);
         void    MusicSetPosition(double seconds);
         void    MusicSetTempo(double tempo);
         void    MusicSetPitch(double pitch);

@@ -30,10 +30,50 @@ void LuaProxy::Audio::MusicPlay()
 }
 
 
+void LuaProxy::Audio::MusicPlayStream()
+{
+#ifndef NO_SDL
+    PGE_MusPlayer::MUS_playMusicStream();
+#endif
+}
+
+
+void LuaProxy::Audio::MusicChannelPause(int channel)
+{
+#ifndef NO_SDL
+    PGE_MusPlayer::MUS_pauseMusicChannel(channel);
+#endif
+}
+
+
+void LuaProxy::Audio::MusicChannelResume(int channel)
+{
+#ifndef NO_SDL
+    PGE_MusPlayer::MUS_resumeMusicChannel(channel);
+#endif
+}
+
+
+void LuaProxy::Audio::MusicChannelIsPaused(int channel)
+{
+#ifndef NO_SDL
+    PGE_MusPlayer::MUS_isChannelPaused(channel);
+#endif
+}
+
+
 void LuaProxy::Audio::MusicRewind()
 {
 #ifndef NO_SDL
     PGE_MusPlayer::MUS_rewindMusic();
+#endif
+}
+
+
+void LuaProxy::Audio::MusicRewindStream()
+{
+#ifndef NO_SDL
+    Mix_RewindMusicStream(PGE_MusPlayer::currentMusic());
 #endif
 }
 
@@ -88,10 +128,25 @@ void LuaProxy::Audio::MusicPause()
 }
 
 
+void LuaProxy::Audio::MusicPauseStream()
+{
+#ifndef NO_SDL
+    PGE_MusPlayer::MUS_pauseMusicStream();
+#endif
+}
+
+
 void LuaProxy::Audio::MusicResume()
 {
 #ifndef NO_SDL
     PGE_MusPlayer::MUS_playMusic();
+#endif
+}
+
+void LuaProxy::Audio::MusicResumeStream()
+{
+#ifndef NO_SDL
+    Mix_PauseMusicStream(PGE_MusPlayer::currentMusic());
 #endif
 }
 
@@ -154,6 +209,21 @@ std::string LuaProxy::Audio::MusicCopyrightTag()
 #ifndef NO_SDL
     return PGE_MusPlayer::MUS_MusicCopyrightTag();
 #endif
+}
+
+void LuaProxy::Audio::MusicGetTracks()
+{
+    Mix_GetMusicTracks(PGE_MusPlayer::currentMusic());
+}
+
+void LuaProxy::Audio::MusicMuteTrackLayer(int trackNumber)
+{
+    Mix_SetMusicTrackMute(PGE_MusPlayer::currentMusic(), trackNumber, 1);
+}
+
+void LuaProxy::Audio::MusicUnmuteTrackLayer(int trackNumber)
+{
+    Mix_SetMusicTrackMute(PGE_MusPlayer::currentMusic(), trackNumber, 0);
 }
 
 void LuaProxy::Audio::MusicSetPosition(double seconds)
