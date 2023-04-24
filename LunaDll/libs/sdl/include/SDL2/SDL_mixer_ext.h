@@ -1,9 +1,9 @@
 /*
   SDL Mixer X:  An extended audio mixer library, forked from SDL_mixer
-  Copyright (C) 2014-2022 Vitaly Novichkov <admin@wohlnet.ru>
+  Copyright (C) 2014-2023 Vitaly Novichkov <admin@wohlnet.ru>
 
   SDL_mixer:  An audio mixer library based on the SDL library
-  Copyright (C) 1997-2022 Sam Lantinga <slouken@libsdl.org>
+  Copyright (C) 1997-2023 Sam Lantinga <slouken@libsdl.org>
 
   This software is provided 'as-is', without any express or implied
   warranty.  In no event will the authors be held liable for any damages
@@ -88,7 +88,7 @@ extern "C" {
  * Printable format: "%d.%d.%d", MAJOR, MINOR, PATCHLEVEL
  */
 #define SDL_MIXER_MAJOR_VERSION 2
-#define SDL_MIXER_MINOR_VERSION 6
+#define SDL_MIXER_MINOR_VERSION 7
 #define SDL_MIXER_PATCHLEVEL    0
 
 /**
@@ -155,15 +155,20 @@ typedef enum
     MIX_INIT_MP3    = 0x00000008,
     MIX_INIT_OGG    = 0x00000010,
     MIX_INIT_MID    = 0x00000020,
-    MIX_INIT_OPUS   = 0x00000040
+    MIX_INIT_OPUS   = 0x00000040,
+    MIX_INIT_WAVPACK= 0x00000080
 } MIX_InitFlags;
 
 /**
  * Initialize SDL_mixer.
  *
  * This function loads dynamic libraries that SDL_mixer needs, and prepares
- * them for use. This must be the first function you call in SDL_mixer, and if
- * it fails you should not continue with the library.
+ * them for use.
+ *
+ * Note that, unlike other SDL libraries, this call is optional! If you load a
+ * music file, SDL_mixer will handle initialization on the fly. This function
+ * will let you know, up front, whether a specific format will be available
+ * for use.
  *
  * Flags should be one or more flags from MIX_InitFlags OR'd together. It
  * returns the flags successfully initialized, or 0 on failure.
@@ -176,6 +181,7 @@ typedef enum
  * - `MIX_INIT_OGG`
  * - `MIX_INIT_MID`
  * - `MIX_INIT_OPUS`
+ * - `MIX_INIT_WAVPACK`
  *
  * More flags may be added in a future SDL_mixer release.
  *
@@ -299,8 +305,11 @@ typedef enum {
     MUS_FLAC,
     MUS_MODPLUG_UNUSED,
     MUS_OPUS,
+    MUS_WAVPACK,
+    MUS_GME
     /* MixerX specific codecs starts with 100 */
-    MUS_GME = 100,
+    , /*Comma was placed here to simplfy the comparison to mainstream part of this enumeration */
+    MUS_FFMPEG = 100,
     /* Special cases to play formats IMF, MUS, or XMI are can't be played without specific MIDI libraries */
     MUS_ADLMIDI = 200,
     MUS_OPNMIDI,
@@ -465,7 +474,7 @@ typedef struct _Mix_Music Mix_Music;
  * The app can use Mix_QuerySpec() to determine the final device settings.
  *
  * When done with an audio device, probably at the end of the program, the app
- * should dispose of the device with Mix_CloseDevice().
+ * should dispose of the device with Mix_CloseAudio().
  *
  * \param frequency the frequency to playback audio at (in Hz).
  * \param format audio format, one of SDL's AUDIO_* values.
@@ -477,7 +486,7 @@ typedef struct _Mix_Music Mix_Music;
  * \since This function is available since SDL_mixer 2.0.0.
  *
  * \sa Mix_OpenAudioDevice
- * \sa Mix_CloseDevice
+ * \sa Mix_CloseAudio
  */
 extern DECLSPEC int MIXCALL Mix_OpenAudio(int frequency, Uint16 format, int channels, int chunksize);
 
@@ -589,9 +598,9 @@ extern DECLSPEC int MIXCALL Mix_OpenAudioDevice(int frequency, Uint16 format, in
 /**
  * Suspend or resume the whole audio output.
  *
- * \since This function is available since SDL_mixer 2.8.0 and MixerX 2.6.0.
+ * \param pause_on 1 to pause audio output, or 0 to resume.
  *
- * @param pause_on Set audio output to pause, 1 (to pause) or 0 (to resume)
+ * \since This function is available since SDL_mixer 2.8.0.
  */
 extern DECLSPEC void MIXCALL Mix_PauseAudio(int pause_on);
 
@@ -619,10 +628,37 @@ extern DECLSPEC void MIXCALL Mix_PauseAudio(int pause_on);
  *
  * \since This function is available since SDL_mixer 2.0.0.
  *
+ * \sa Mix_QuerySpecEx
  * \sa Mix_OpenAudio
  * \sa Mix_OpenAudioDevice
  */
 extern DECLSPEC int MIXCALL Mix_QuerySpec(int *frequency, Uint16 *format, int *channels);
+
+/**
+ * Find out what the actual audio device parameters are.
+ *
+ * If Mix_OpenAudioDevice() was called with `allowed_changes` set to anything
+ * but zero, or Mix_OpenAudio() was used, some audio device settings may be
+ * different from the application's request. This function will report what
+ * the device is actually running at.
+ *
+ * Note this is only important if the app intends to touch the audio buffers
+ * being sent to the hardware directly. If an app just wants to play audio
+ * files and let SDL_mixer handle the low-level details, this function can
+ * probably be ignored.
+ *
+ * If the audio device is not opened, this function will return 0.
+ *
+ * \param out_spec On return, will be filled with the audio device's spec data
+ * \returns 1 if the audio device has been opened, 0 otherwise.
+ *
+ * \since This function is available since MixerX 2.6.0.
+ *
+ * \sa Mix_QuerySpec
+ * \sa Mix_OpenAudio
+ * \sa Mix_OpenAudioDevice
+ */
+extern DECLSPEC int MIXCALL Mix_QuerySpecEx(SDL_AudioSpec *out_spec);
 
 /**
  * Dynamically change the number of channels managed by the mixer.
@@ -954,6 +990,7 @@ extern DECLSPEC Mix_Music *MIXCALL Mix_LoadMUS_RW_GME(SDL_RWops *src, int freesr
  * - `MUS_MP3` (MP3 files)
  * - `MUS_FLAC` (FLAC files)
  * - `MUS_OPUS` (Opus files)
+ * - `MUS_WAVPACK` (WavPack files)
  *
  * If `freesrc` is non-zero, the RWops will be closed before returning,
  * whether this function succeeds or not. SDL_mixer reads everything it needs
@@ -965,8 +1002,6 @@ extern DECLSPEC Mix_Music *MIXCALL Mix_LoadMUS_RW_GME(SDL_RWops *src, int freesr
  *
  * When done with this music, the app should dispose of it with a call to
  * Mix_FreeMusic().
- *
- * This is the MixerX fork exclusive function.
  *
  * \param src an SDL_RWops that data will be read from.
  * \param type the type of audio data provided by `src`.
@@ -1577,8 +1612,6 @@ extern DECLSPEC void * MIXCALL Mix_GetMusicHookData(void);
 extern DECLSPEC void MIXCALL Mix_ChannelFinished(void (SDLCALL *channel_finished)(int channel));
 
 
-/* Special Effects API by ryan c. gordon. (icculus@icculus.org) */
-
 #define MIX_CHANNEL_POST  (-2)
 
 /**
@@ -2145,6 +2178,7 @@ extern DECLSPEC int MIXCALL Mix_SetMusicEffectReverseStereo(Mix_Music *mus, int 
  */
 extern DECLSPEC int MIXCALL Mix_ReserveChannels(int num);
 
+
 /* Channel grouping functions */
 
 /**
@@ -2602,7 +2636,6 @@ extern DECLSPEC int MIXCALL Mix_FadeInMusicStream(Mix_Music *music, int loops, i
  */
 extern DECLSPEC int MIXCALL Mix_FadeInMusicStreamPos(Mix_Music *music, int loops, int ms, double position); /*MIXER-X*/
 
-
 /**
  * Set the volume for a specific channel.
  *
@@ -2869,7 +2902,7 @@ extern DECLSPEC int MIXCALL Mix_ExpireChannel(int channel, int ticks);
  *
  * \param which the channel to fade out.
  * \param ms number of milliseconds to fade before halting the channel.
- * \returns 0 on success, or -1 on error.
+ * \returns the number of channels scheduled to fade.
  *
  * \since This function is available since SDL_mixer 2.0.0.
  */
@@ -3205,6 +3238,10 @@ extern DECLSPEC int MIXCALL Mix_ModMusicJumpToOrder(int order);
  * This is the MixerX fork exclusive function.
  */
 extern DECLSPEC int MIXCALL Mix_ModMusicStreamJumpToOrder(Mix_Music *music, int order);/*MixerX*/
+
+/* Tracks */
+extern DECLSPEC int MIXCALL Mix_StartTrack(Mix_Music *music, int track);
+extern DECLSPEC int MIXCALL Mix_GetNumTracks(Mix_Music *music);
 
 /**
  * Set the current position in the music object (if playing), in seconds.

@@ -24,6 +24,9 @@
 #include "LuaProxyFFIGraphics.h"
 #include "LunaPathValidator.h"
 
+#include "../Rendering/GL/GLEngine.h"
+#include "../Rendering/GL/GLEngineProxy.h"
+
 #define FFI_EXPORT(sig) __declspec(dllexport) sig __cdecl
 
 // Prototypes from RuntimeHookCharacterId.cpp
@@ -893,6 +896,19 @@ typedef struct ExtendedBlockFields_\
         std::string fullName = filename;
         testModeSetupNewLevel(fullName);
     }
+    //FFI_EXPORT(void) LunaLuaDoScreenshotToEpisodePath(const char* filename)
+    //{
+        //std::wstring fullName = Str2WStr(filename).c_str();
+        //std::wstring finalName = (std::wstring)GM_FULLDIR + L"\\" + fullName + std::wstring(L".png");
+        //if (g_GLEngine.IsEnabled())
+        //{
+            //g_GLEngine.TriggerScreenshot([](HGLOBAL globalMem, const BITMAPINFOHEADER* header, void* pData, HWND curHwnd) {
+                //::GenerateScreenshot(finalName, *header, pData);
+                //GlobalFree(globalMem);
+                //return true;
+            //});
+        //}
+    //}
 }
 
 void CachedReadFile::clearData()

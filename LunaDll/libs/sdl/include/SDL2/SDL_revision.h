@@ -1,6 +1,8 @@
-#define SDL_REVISION "https://github.com/WohlSoft/AudioCodecs.git@589b84b6268f5a816ff6fe99c892757169147c07"
+/* #undef SDL_VENDOR_INFO */
 #define SDL_REVISION_NUMBER 0
 
-#ifndef SDL_REVISION
-#define SDL_REVISION ""
+#ifdef SDL_VENDOR_INFO
+#define SDL_REVISION "SDL-2023-04-15-0-g58f0eac8 (" SDL_VENDOR_INFO ")"
+#else
+#define SDL_REVISION "SDL-2023-04-15-0-g58f0eac8"
 #endif
