@@ -28,7 +28,7 @@ mkdir build
 cd build
 
 And then run this:
-cmake -DCMAKE_BUILD_TYPE=Release -DUSE_LOCAL_SDL2=ON -DCMAKE_INSTALL_PREFIX=../../mixerx-install .. -DYASM_ASSEMBLER="C:/Program Files (x86)/yasm" -G "Visual Studio 14 2015" -A Win32 ..
+cmake -DCMAKE_BUILD_TYPE=Release -DUSE_LOCAL_SDL2=ON -DCMAKE_INSTALL_PREFIX=/out .. -DYASM_ASSEMBLER="C:/Program Files (x86)/yasm" -G "Visual Studio 14 2015" -A Win32 ..
 
 5. Before we continue though, there will be some errors if running the building unmodified. This is because there are some errors when compiling the GME library, because "static_assert" information pertaining to the incorrect layout error of some files aren't written correctly. You should go into the following files and mark // at each line on the following files and lines:
 

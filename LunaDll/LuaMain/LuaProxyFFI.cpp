@@ -909,6 +909,20 @@ typedef struct ExtendedBlockFields_\
             //});
         //}
     //}
+    FFI_EXPORT(bool) LunaLuaInSMASPlusPlus()
+    {
+        EpisodeListItem* ep = EpisodeListItem::GetRaw(0);
+        if(ep->episodeName == "Super Mario All-Stars++") {
+            return (bool)true;
+        } else {
+            return (bool)false;
+        }
+    }
+    FFI_EXPORT(void) LunaLuaSetSMASPlusPlusEpisodeName()
+    {
+        EpisodeListItem* ep = EpisodeListItem::GetRaw(0);
+        ep->episodeName = "Super Mario All-Stars++";
+    }
 }
 
 void CachedReadFile::clearData()
