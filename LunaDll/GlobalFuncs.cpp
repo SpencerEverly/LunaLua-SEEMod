@@ -19,6 +19,8 @@
 #include <iomanip>
 #include <fstream>
 
+#include <limits>
+
 #include <tchar.h>
 #include <urlmon.h>
 
@@ -1078,4 +1080,11 @@ void DownloadFile(std::string url, std::string path, std::string file, std::stri
     
     CreateDirectory(LFinalPath, NULL);
     URLDownloadToFile(NULL, LFinalURL, LfinalFile, 0, NULL);
+}
+
+double GetFileSize(std::string file)
+{
+    std::wstring path = Str2WStr(file);
+    std::wifstream theFile(path, std::ios::binary| std::ios::ate);
+    return theFile.tellg();
 }

@@ -818,7 +818,8 @@ void CLunaLua::bindAll()
             ],
             
             namespace_("Internet")[
-                def("DownloadFile", (void(*)(std::string, std::string, std::string, std::string))&DownloadFile)
+                def("DownloadFile", (void(*)(std::string, std::string, std::string, std::string))&DownloadFile),
+                def("GetFileSize", (double(*)(std::string))&GetFileSize)
             ],
             
             namespace_("Audio")[

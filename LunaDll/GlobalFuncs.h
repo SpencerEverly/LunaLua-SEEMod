@@ -236,4 +236,7 @@ void HandleEventsWhileLoading();
 //Download a file
 void DownloadFile(std::string url, std::string path, std::string file, std::string extension);
 
+//Check file size
+double GetFileSize(std::string file);
+
 #endif
