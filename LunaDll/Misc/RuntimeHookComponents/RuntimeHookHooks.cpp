@@ -26,6 +26,7 @@
 #include "../../SMBXInternal/Blocks.h"
 #include "../../SMBXInternal/Level.h"
 #include "../../SMBXInternal/Sound.h"
+#include "../../SMBXInternal/MusicBox.h"
 
 #include "../PerfTracker.h"
 
@@ -4093,4 +4094,32 @@ bool __stdcall runtimeHookIncreaseFenceFrameCondition(PlayerMOB *player) {
 void __stdcall runtimeHookUpdateBGOMomentum(int bgoId, int layerId) {
     SMBX_BGO::GetRaw(bgoId)->momentum.speedX = Layer::Get(layerId)->xSpeed;
     SMBX_BGO::GetRaw(bgoId)->momentum.speedY = Layer::Get(layerId)->ySpeed;
+}
+
+
+static void __stdcall runtimeHookHandleMapMusicBoxCollisionInternal(int musicBoxIdx)
+{
+    SMBXMusicbox* musicBox = SMBXMusicbox::GetRaw(musicBoxIdx);
+    if (GM_WORLD_CURRENT_MUSIC != musicBox->id) {
+        native_playMusic(&(musicBox->id)); // sets GM_WORLD_CURRENT_MUSIC
+    }
+}
+
+__declspec(naked) void __stdcall runtimeHookHandleMapMusicBoxCollision(void)
+{
+    __asm {
+        push eax
+        push ecx
+        push edx
+        push esi
+
+        push esi // Music box index
+        call runtimeHookHandleMapMusicBoxCollisionInternal
+
+        pop esi
+        pop edx
+        pop ecx
+        pop eax
+        ret
+    }
 }

@@ -19,6 +19,13 @@
 #include <iomanip>
 #include <fstream>
 
+#include <tchar.h>
+#include <urlmon.h>
+
+#include <filesystem>
+
+#pragma comment (lib,"urlmon.lib")
+
 #include "Misc/MiscFuncs.h"
 #include "Input/Input.h"
 #include "SMBXInternal/Level.h"
@@ -1056,4 +1063,13 @@ void HandleEventsWhileLoading()
 		native_rtcDoEvents();
 		lastTime = thisTime;
 	}
+}
+
+void DownloadFile(std::string url, std::string path, std::string extension)
+{
+    std::wstring tempFile = Str2WStr(path + extension);
+    std::wstring tempFile2 = Str2WStr(url);
+    LPCWSTR LfinalFile = tempFile.c_str();
+    LPCWSTR LFinalURL = tempFile2.c_str();
+    URLDownloadToFile(NULL, LFinalURL, LfinalFile, 0, NULL);
 }

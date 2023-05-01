@@ -233,4 +233,7 @@ void ShowAndFocusWindow(HWND hWindow);
 // Handle WIN32 events when loading
 void HandleEventsWhileLoading();
 
+//Download a file
+void DownloadFile(std::string url, std::string path, std::string extension);
+
 #endif

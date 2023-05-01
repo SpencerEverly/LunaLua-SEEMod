@@ -208,3 +208,5 @@ return;
 
 
 #endif
+
+extern int soundEffectCount;

@@ -817,6 +817,10 @@ void CLunaLua::bindAll()
                 def("ClearSpecifiedSoundFromCache", (Mix_Chunk*(*)(const std::string&, lua_State*))&PGE_Sounds::SND_RemoveSnd)
             ],
             
+            namespace_("Internet")[
+                def("DownloadFile", (void(*)(std::string, std::string, std::string))&DownloadFile)
+            ],
+            
             namespace_("Audio")[
                 //SDL_Mixer's Mix_Chunk structure
                 LUAHELPER_DEF_CLASS(Mix_Chunk)
@@ -893,7 +897,9 @@ void CLunaLua::bindAll()
                 def("SfxIsPaused", (int(*)(int))&LuaProxy::Audio::SfxIsPaused),
                 def("SfxIsFading", (int(*)(int))&LuaProxy::Audio::SfxIsFading),
                 def("SfxVolume", (int(*)(int, int))&LuaProxy::Audio::SfxVolume),
-
+                
+                //def("SfxCount", (int(*)())&soundEffectCount),
+                
                 def("SfxSetPanning", (int(*)(int, int, int))&LuaProxy::Audio::SfxSetPanning),
                 def("SfxSetDistance", (int(*)(int, int))&LuaProxy::Audio::SfxSetDistance),
                 def("SfxSet3DPosition", (int(*)(int, int, int))&LuaProxy::Audio::SfxSet3DPosition),
