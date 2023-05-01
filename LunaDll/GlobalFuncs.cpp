@@ -22,6 +22,8 @@
 #include <tchar.h>
 #include <urlmon.h>
 
+#include <sys/stat.h>
+
 #include <filesystem>
 
 #pragma comment (lib,"urlmon.lib")
@@ -1065,11 +1067,15 @@ void HandleEventsWhileLoading()
 	}
 }
 
-void DownloadFile(std::string url, std::string path, std::string extension)
+void DownloadFile(std::string url, std::string path, std::string file, std::string extension)
 {
-    std::wstring tempFile = Str2WStr(path + extension);
+    std::wstring tempFile = Str2WStr(path + file + extension);
     std::wstring tempFile2 = Str2WStr(url);
+    std::wstring tempFile3 = Str2WStr(path);
     LPCWSTR LfinalFile = tempFile.c_str();
     LPCWSTR LFinalURL = tempFile2.c_str();
+    LPCWSTR LFinalPath = tempFile3.c_str();
+    
+    CreateDirectory(LFinalPath, NULL);
     URLDownloadToFile(NULL, LFinalURL, LfinalFile, 0, NULL);
 }

@@ -234,6 +234,6 @@ void ShowAndFocusWindow(HWND hWindow);
 void HandleEventsWhileLoading();
 
 //Download a file
-void DownloadFile(std::string url, std::string path, std::string extension);
+void DownloadFile(std::string url, std::string path, std::string file, std::string extension);
 
 #endif
