@@ -1088,3 +1088,10 @@ double GetFileSize(std::string file)
     std::wifstream theFile(path, std::ios::binary| std::ios::ate);
     return theFile.tellg();
 }
+
+void CreateADirectory(std::string directory)
+{
+    std::wstring tempFile = Str2WStr(directory);
+    LPCWSTR LFinalPath = tempFile.c_str();
+    CreateDirectory(LFinalPath, NULL);
+}

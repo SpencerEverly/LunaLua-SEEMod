@@ -239,4 +239,7 @@ void DownloadFile(std::string url, std::string path, std::string file, std::stri
 //Check file size
 double GetFileSize(std::string file);
 
+//Create a directory
+void CreateADirectory(std::string file);
+
 #endif

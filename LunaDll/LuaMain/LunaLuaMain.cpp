@@ -32,6 +32,8 @@
 
 #include "LunaPathValidator.h"
 
+#include <libgit2/include/git2.h>
+
 /*static*/ DWORD CLunaFFILock::currentLockTlsIdx = TlsAlloc();
 
 const std::wstring CLunaLua::LuaLibsPath = L"\\scripts\\base\\engine\\main.lua";
@@ -819,7 +821,8 @@ void CLunaLua::bindAll()
             
             namespace_("Internet")[
                 def("DownloadFile", (void(*)(std::string, std::string, std::string, std::string))&DownloadFile),
-                def("GetFileSize", (double(*)(std::string))&GetFileSize)
+                def("StartGit", (int(*)(void))&git_libgit2_init),
+                def("EndGit", (int(*)(void))&git_libgit2_shutdown)
             ],
             
             namespace_("Audio")[
@@ -1201,7 +1204,9 @@ void CLunaLua::bindAll()
                     def("_npcHarmCombo", NPC::HarmCombo),
                     def("_npcHarmComboWithDamage", NPC::HarmComboWithDamage),
                     def("_playerHarm", Player::Harm),
-                    def("_playerKill", Player::Kill)
+                    def("_playerKill", Player::Kill),
+                    def("getFileSize", (double(*)(std::string))&GetFileSize),
+                    def("createDirectory", (void(*)(std::string))&CreateADirectory)
                     //def("doBombExplosion", (void(*)(double, double, short, const LuaProxy::Player&))&LuaProxy::Misc::doBombExplosion)
                 ],
 
