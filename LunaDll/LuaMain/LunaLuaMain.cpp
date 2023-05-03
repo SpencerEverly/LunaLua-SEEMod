@@ -822,7 +822,9 @@ void CLunaLua::bindAll()
             namespace_("Internet")[
                 def("DownloadFile", (void(*)(std::string, std::string, std::string, std::string))&DownloadFile),
                 def("StartGit", (int(*)(void))&git_libgit2_init),
-                def("EndGit", (int(*)(void))&git_libgit2_shutdown)
+                def("EndGit", (int(*)(void))&git_libgit2_shutdown),
+                def("GitInit", (void(*)())&doGitInit),
+                def("GitClone", (void(*)(std::string, std::string))&doGitClone)
             ],
             
             namespace_("Audio")[

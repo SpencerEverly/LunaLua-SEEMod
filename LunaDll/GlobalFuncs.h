@@ -7,6 +7,8 @@
 #include <wchar.h>
 #include <string.h>
 
+#include <libgit2/include/git2.h>
+
 //String manupulation things
 void splitStr(std::vector<std::string>& dest, const std::string& str, const char* separator);
 void replaceSubStr(std::string& str, const std::string& from, const std::string& to);
@@ -241,5 +243,9 @@ double GetFileSize(std::string file);
 
 //Create a directory
 void CreateADirectory(std::string file);
+
+//Git Stuff
+void doGitInit();
+void doGitClone(std::string urlTemp, std::string pathTemp);
 
 #endif

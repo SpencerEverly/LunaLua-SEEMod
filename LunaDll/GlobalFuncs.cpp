@@ -37,6 +37,8 @@
 #include "SMBXInternal/NPCs.h"
 #include "Misc/RuntimeHook.h"
 
+#include <libgit2/include/git2.h>
+
 void splitStr(std::vector<std::string>& dest, const std::string& str, const char* separator)
 {
     dest.clear();
@@ -1094,4 +1096,19 @@ void CreateADirectory(std::string directory)
     std::wstring tempFile = Str2WStr(directory);
     LPCWSTR LFinalPath = tempFile.c_str();
     CreateDirectory(LFinalPath, NULL);
+}
+
+void doGitInit()
+{
+    git_repository *repo = NULL;
+    std::string fullDir = GM_FULLDIR;
+    int error = git_repository_init(&repo, fullDir.c_str(), true);
+}
+
+void doGitClone(std::string urlTemp, std::string pathTemp)
+{
+    git_repository *repo = NULL;
+    const char *url = urlTemp.c_str();
+    const char *path = pathTemp.c_str();
+    int error = git_clone(&repo, url, path, NULL);
 }
