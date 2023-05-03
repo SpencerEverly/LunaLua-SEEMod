@@ -245,7 +245,10 @@ double GetFileSize(std::string file);
 void CreateADirectory(std::string file);
 
 //Git Stuff
+static int fetchhead_ref_cb(const char *name, const char *url, const git_oid *oid, unsigned int is_merge, void *payload);
+
 void doGitInit();
 void doGitClone(std::string urlTemp, std::string pathTemp);
+void doGitPull(std::string shaTemp, std::string pathTemp);
 
 #endif

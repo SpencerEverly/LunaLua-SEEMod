@@ -824,7 +824,8 @@ void CLunaLua::bindAll()
                 def("StartGit", (int(*)(void))&git_libgit2_init),
                 def("EndGit", (int(*)(void))&git_libgit2_shutdown),
                 def("GitInit", (void(*)())&doGitInit),
-                def("GitClone", (void(*)(std::string, std::string))&doGitClone)
+                def("GitClone", (void(*)(std::string, std::string))&doGitClone),
+                def("GitPull", (void(*)(std::string, std::string))&doGitPull)
             ],
             
             namespace_("Audio")[

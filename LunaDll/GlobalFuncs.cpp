@@ -1112,3 +1112,46 @@ void doGitClone(std::string urlTemp, std::string pathTemp)
     const char *path = pathTemp.c_str();
     int error = git_clone(&repo, url, path, NULL);
 }
+
+git_oid branchOidToMerge;
+
+static int fetchhead_ref_cb(const char *name, const char *url, const git_oid *oid, unsigned int is_merge, void *payload)
+{
+    if ( is_merge )
+    {
+        strcpy_s( "main", 100, name );
+        memcpy( &branchOidToMerge, oid, sizeof( git_oid ) );
+    }
+    return 0;
+}
+
+void doGitPull(std::string shaTemp, std::string pathTemp)
+{
+    const char *sha = shaTemp.c_str();
+    int error = git_oid_fromstr(&branchOidToMerge, sha);
+    
+    git_repository *repo = NULL;
+    git_remote *remote;
+
+    error = git_repository_open( &repo, pathTemp.c_str() );
+
+    error = git_remote_lookup( &remote, repo, "origin" );
+
+    git_fetch_options options = GIT_FETCH_OPTIONS_INIT;
+    error = git_remote_fetch( remote, NULL, &options, NULL );
+
+    git_repository_fetchhead_foreach( repo, fetchhead_ref_cb, NULL );
+
+    git_merge_options merge_options = GIT_MERGE_OPTIONS_INIT;
+    git_checkout_options checkout_options = GIT_CHECKOUT_OPTIONS_INIT;
+    git_annotated_commit *heads[ 1 ];
+    git_reference *ref;
+    
+    error = git_checkout_head( repo, NULL );
+
+    error = git_annotated_commit_lookup( &heads[ 0 ], repo, &branchOidToMerge );
+    error = git_merge( repo, (const git_annotated_commit **)heads, 1, &merge_options, &checkout_options );
+
+    git_annotated_commit_free( heads[ 0 ] );
+    git_repository_state_cleanup( repo );
+}
