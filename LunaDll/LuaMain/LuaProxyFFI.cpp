@@ -922,13 +922,13 @@ typedef struct ExtendedBlockFields_\
         const std::wstring firstLevel6 = Str2WStr(GM_FULLDIR + "SMBS - W-1, L-1.lvlx");
         const std::wstring worldFilename = Str2WStr(GM_FULLDIR + "__World Map.wld");
         if( ep->episodeName == "Super Mario All-Stars++"
-            && fileExists(firstLevel1)
-            && fileExists(firstLevel2)
-            && fileExists(firstLevel3)
-            && fileExists(firstLevel4)
-            && fileExists(firstLevel5)
-            && fileExists(firstLevel6)
-            && fileExists(worldFilename)
+            //&& fileExists(firstLevel1)
+            //&& fileExists(firstLevel2)
+            //&& fileExists(firstLevel3)
+            //&& fileExists(firstLevel4)
+            //&& fileExists(firstLevel5)
+            //&& fileExists(firstLevel6)
+            //&& fileExists(worldFilename)
         ) {
             return (bool)true;
         } else {
