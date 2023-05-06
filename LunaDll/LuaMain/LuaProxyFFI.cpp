@@ -6,6 +6,7 @@
 #include <cstring>
 #include <Windows.h>
 #include <Psapi.h>
+#include <filesystem>
 
 #include "../Globals.h"
 #include "../GlobalFuncs.h"
@@ -20,6 +21,7 @@
 #include "../Misc/TestMode.h"
 #include "../Misc/TestModeMenu.h"
 #include "../Misc/RuntimeHook.h"
+#include "../Misc/MiscFuncs.h"
 #include "LunaLuaMain.h"
 #include "LuaProxyFFIGraphics.h"
 #include "LunaPathValidator.h"
@@ -912,7 +914,22 @@ typedef struct ExtendedBlockFields_\
     FFI_EXPORT(bool) LunaLuaInSMASPlusPlus()
     {
         EpisodeListItem* ep = EpisodeListItem::GetRaw(0);
-        if(ep->episodeName == "Super Mario All-Stars++") {
+        const std::wstring firstLevel1 = Str2WStr(GM_FULLDIR + "SMB1 - W-1, L-1.lvlx");
+        const std::wstring firstLevel2 = Str2WStr(GM_FULLDIR + "SMBLL - W-1, L-1.lvlx");
+        const std::wstring firstLevel3 = Str2WStr(GM_FULLDIR + "SMB2 - W-1, L-1.lvlx");
+        const std::wstring firstLevel4 = Str2WStr(GM_FULLDIR + "SMB3 - W-1, L-1.lvlx");
+        const std::wstring firstLevel5 = Str2WStr(GM_FULLDIR + "SMW - W-1, L-YI1.lvlx");
+        const std::wstring firstLevel6 = Str2WStr(GM_FULLDIR + "SMBS - W-1, L-1.lvlx");
+        const std::wstring worldFilename = Str2WStr(GM_FULLDIR + "__World Map.wld");
+        if( ep->episodeName == "Super Mario All-Stars++"
+            && fileExists(firstLevel1)
+            && fileExists(firstLevel2)
+            && fileExists(firstLevel3)
+            && fileExists(firstLevel4)
+            && fileExists(firstLevel5)
+            && fileExists(firstLevel6)
+            && fileExists(worldFilename)
+        ) {
             return (bool)true;
         } else {
             return (bool)false;
