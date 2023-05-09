@@ -209,4 +209,4 @@ return;
 
 #endif
 
-extern int soundEffectCount;
+extern double soundEffectCount;

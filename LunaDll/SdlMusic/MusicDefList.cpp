@@ -83,7 +83,7 @@ std::string MusicManager::musAliasesList[MusicManager::defaultMusCount]=
     "music56"  //75
 };
 
-std::string MusicManager::chunksAliasesList[91]=
+std::string MusicManager::chunksAliasesList[MusicManager::defaultSoundCount]=
 {
     "sound1",
     "sound2",
@@ -354,7 +354,7 @@ std::string MusicManager::defaultChunksList[MusicManager::defaultSoundCount]=
     "sound\\bubble.ogg"
 };
 
-int MusicManager::chunksChannelsList[91] =
+int MusicManager::chunksChannelsList[MusicManager::defaultSoundCount] =
 {
      0,//"sound\\player-jump.ogg",
     -1,//"sound\\stomped.ogg",

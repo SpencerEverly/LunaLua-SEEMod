@@ -129,4 +129,4 @@ void printBoxA(const char *fmt, ...)
     dbgboxA(buf);
 }
 
-int soundEffectCount = 0;
+double soundEffectCount = 0;

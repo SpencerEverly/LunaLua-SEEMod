@@ -375,11 +375,11 @@ void MusicManager::loadSounds(std::string path, std::string root, bool is_first_
     {
         //Read total count of sound effects
         int new_max_sound_id = MusicManager::defaultSoundCount;
-        //if (soundsList.beginGroup("sound-main"))
-        //{
+        if (soundsList.beginGroup("sound-main"))
+        {
             //Read new max values from ini, if defined
-            //soundsList.read("total", new_max_sound_id);
-        //}
+            soundsList.read("total", new_max_sound_id, new_max_sound_id);
+        }
         
         soundEffectCount = new_max_sound_id;
         
@@ -595,11 +595,12 @@ void MusicManager::resetSoundsToDefault()
 void MusicManager::initArraysSound()
 {
     curRoot = PGE_SDL_Manager::appPath;
-    for(int i=0; i<max_soundeffect_count; i++)
+    for(int i = 0; i < max_soundeffect_count; i++)
     {
         sounds[i].id=i+1;
         sounds[i].setPath(PGE_SDL_Manager::appPath+defaultChunksList[i]);
         sounds[i].channel=chunksChannelsList[i];
+        break;
     }
 }
 
