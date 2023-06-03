@@ -143,14 +143,14 @@ bool testModeSetupNewLevel(std::string filename)
     
     // Get the full path if necessary
     std::wstring fullPath = resolveCwdOrWorldsPath(path);
-    
-    const std::string &newLevelData = ""; //testModeSettings.rawData;
 
     // Check that the file exists, but only if we don't have raw level data
-    if (newLevelData.empty() && (FileExists(fullPath.c_str()) == 0))
+    if (FileExists(fullPath.c_str()) == 0)
     {
         return false;
     }
+
+    const std::string &newLevelData = ""; //testModeSettings.rawData;
 
     testModeData.levelRawData.clear();
     if(!newLevelData.empty())

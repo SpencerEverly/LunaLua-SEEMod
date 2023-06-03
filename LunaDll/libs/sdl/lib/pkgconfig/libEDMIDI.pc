@@ -1,4 +1,4 @@
-prefix=C:/msys64/home/spenc/mixerx-install
+prefix=E:/Github/SDL-Mixer-X/build
 exec_prefix=${prefix}
 libdir=${exec_prefix}/lib
 includedir=${prefix}/include

@@ -1,7 +1,7 @@
-prefix=C:/msys64/home/spenc/mixerx-install
+prefix=E:/Github/SDL-Mixer-X/build
 exec_prefix=${prefix}
-libdir=C:/msys64/home/spenc/mixerx-install/lib
-includedir=C:/msys64/home/spenc/mixerx-install/include
+libdir=E:/Github/SDL-Mixer-X/build/lib
+includedir=E:/Github/SDL-Mixer-X/build/include
 
 Name: libxmp
 Description: Xmp module player library

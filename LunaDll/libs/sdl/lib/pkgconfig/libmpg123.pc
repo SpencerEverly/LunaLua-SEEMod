@@ -1,7 +1,7 @@
-prefix=C:/msys64/home/spenc/mixerx-install
-exec_prefix=C:/msys64/home/spenc/mixerx-install
-libdir=C:/msys64/home/spenc/mixerx-install/lib
-includedir=C:/msys64/home/spenc/mixerx-install/include
+prefix=E:/Github/SDL-Mixer-X/build
+exec_prefix=E:/Github/SDL-Mixer-X/build
+libdir=E:/Github/SDL-Mixer-X/build/lib
+includedir=E:/Github/SDL-Mixer-X/build/include
 
 Name: libmpg123
 Description: An optimised MPEG Audio decoder

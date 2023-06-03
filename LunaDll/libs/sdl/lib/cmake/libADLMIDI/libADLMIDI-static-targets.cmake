@@ -19,7 +19,7 @@ set(CMAKE_IMPORT_FILE_VERSION 1)
 set(_cmake_targets_defined "")
 set(_cmake_targets_not_defined "")
 set(_cmake_expected_targets "")
-foreach(_cmake_expected_target IN ITEMS MPG123::libmpg123 MPG123::libsyn123)
+foreach(_cmake_expected_target IN ITEMS libADLMIDI::ADLMIDI_static)
   list(APPEND _cmake_expected_targets "${_cmake_expected_target}")
   if(TARGET "${_cmake_expected_target}")
     list(APPEND _cmake_targets_defined "${_cmake_expected_target}")
@@ -55,28 +55,16 @@ if(_IMPORT_PREFIX STREQUAL "/")
   set(_IMPORT_PREFIX "")
 endif()
 
-# Create imported target MPG123::libmpg123
-add_library(MPG123::libmpg123 STATIC IMPORTED)
+# Create imported target libADLMIDI::ADLMIDI_static
+add_library(libADLMIDI::ADLMIDI_static STATIC IMPORTED)
 
-set_target_properties(MPG123::libmpg123 PROPERTIES
+set_target_properties(libADLMIDI::ADLMIDI_static PROPERTIES
+  INTERFACE_COMPILE_DEFINITIONS "ENABLE_END_SILENCE_SKIPPING"
   INTERFACE_INCLUDE_DIRECTORIES "${_IMPORT_PREFIX}/include"
-  INTERFACE_LINK_LIBRARIES "\$<LINK_ONLY:\$<\$<BOOL:>:m>>;\$<LINK_ONLY:\$<\$<BOOL:1>:shlwapi>>"
 )
-
-# Create imported target MPG123::libsyn123
-add_library(MPG123::libsyn123 STATIC IMPORTED)
-
-set_target_properties(MPG123::libsyn123 PROPERTIES
-  INTERFACE_INCLUDE_DIRECTORIES "${_IMPORT_PREFIX}/include"
-  INTERFACE_LINK_LIBRARIES "\$<LINK_ONLY:\$<\$<BOOL:1>:shlwapi>>"
-)
-
-if(CMAKE_VERSION VERSION_LESS 2.8.12)
-  message(FATAL_ERROR "This file relies on consumers using CMake 2.8.12 or greater.")
-endif()
 
 # Load information for each installed configuration.
-file(GLOB _cmake_config_files "${CMAKE_CURRENT_LIST_DIR}/targets-*.cmake")
+file(GLOB _cmake_config_files "${CMAKE_CURRENT_LIST_DIR}/libADLMIDI-static-targets-*.cmake")
 foreach(_cmake_config_file IN LISTS _cmake_config_files)
   include("${_cmake_config_file}")
 endforeach()
