@@ -878,9 +878,9 @@ void CLunaLua::bindAll()
                 def("MusicChange", (void(*)(int, const std::string&, int))&LuaProxy::Audio::changeMusic),
                 def("MusicFadeOut", (void(*)(int, int))&LuaProxy::Audio::musicFadeOut),
                 
-                def("MusicGetTracks", (void(*)())&LuaProxy::Audio::MusicGetTracks),
-                def("MusicMuteTrackLayer", (void(*)(int))&LuaProxy::Audio::MusicMuteTrackLayer),
-                def("MusicUnmuteTrackLayer", (void(*)(int))&LuaProxy::Audio::MusicUnmuteTrackLayer),
+                def("MusicTrackGet", (void(*)())&LuaProxy::Audio::MusicGetTracks),
+                def("MusicTrackMute", (void(*)(int))&LuaProxy::Audio::MusicMuteTrackLayer),
+                def("MusicTrackUnmute", (void(*)(int))&LuaProxy::Audio::MusicUnmuteTrackLayer),
                 
                 //SFX
                 def("newMix_Chunk", (Mix_Chunk*(*)())&LuaProxy::Audio::newMix_Chunk),
