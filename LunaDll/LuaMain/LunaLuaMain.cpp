@@ -664,6 +664,7 @@ void CLunaLua::bindAll()
             ],
 
             namespace_("Misc")[
+                def("getOSLanguage", &GetOSLanguage),
                 def("cheatBuffer", (std::string(*)())&LuaProxy::Misc::cheatBuffer),
                 def("cheatBuffer", (void(*)(const luabind::object&, lua_State*))&LuaProxy::Misc::cheatBuffer),
                 def("listFiles", &LuaProxy::Misc::listFiles),

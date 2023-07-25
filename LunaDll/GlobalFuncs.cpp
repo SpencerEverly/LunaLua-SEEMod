@@ -1071,6 +1071,12 @@ void HandleEventsWhileLoading()
 	}
 }
 
+double GetOSLanguage()
+{
+    LANGID language = GetUserDefaultUILanguage();
+    return language;
+}
+
 void DownloadFile(std::string url, std::string path, std::string file, std::string extension)
 {
     std::wstring tempFile = Str2WStr(path + file + extension);

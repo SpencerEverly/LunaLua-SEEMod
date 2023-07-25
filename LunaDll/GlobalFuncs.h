@@ -235,6 +235,9 @@ void ShowAndFocusWindow(HWND hWindow);
 // Handle WIN32 events when loading
 void HandleEventsWhileLoading();
 
+//Language detection
+double GetOSLanguage();
+
 //Download a file
 void DownloadFile(std::string url, std::string path, std::string file, std::string extension);
 
