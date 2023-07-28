@@ -2809,15 +2809,35 @@ void __stdcall runtimeHookCheckWindowFocus()
     {
         // During this block of code, pause music if it was playing
         PGE_MusPlayer::DeferralLock musicPauseLock(true);
+        
+        std::shared_ptr<Event> unfocusedEvent = std::make_shared<Event>("onWindowUnfocus", false);
+        unfocusedEvent->setDirectEventName("onWindowUnfocus");
+        unfocusedEvent->setLoopable(false);
+        gLunaLua.callEvent(unfocusedEvent);
 
         // Wait for focus
         TestModeSendNotification("suspendWhileUnfocusedNotification");
         while (!gMainWindowFocused && !LunaLoadScreenIsActive())
         {
+            std::shared_ptr<Event> unfocusedDrawEvent = std::make_shared<Event>("onDrawUnfocus", false);
+            unfocusedDrawEvent->setDirectEventName("onDrawUnfocus");
+            unfocusedDrawEvent->setLoopable(false);
+            gLunaLua.callEvent(unfocusedDrawEvent);
+        
             Sleep(100);
             LunaDllWaitFrame(false);
         }
+        
+        std::shared_ptr<Event> focusedEvent = std::make_shared<Event>("onWindowFocus", false);
+        focusedEvent->setDirectEventName("onWindowFocus");
+        focusedEvent->setLoopable(false);
+        gLunaLua.callEvent(focusedEvent);
+        
         TestModeSendNotification("resumeAfterUnfocusedNotification");
+    }
+    else if (gMainWindowFocused && !LunaLoadScreenIsActive())
+    {
+        
     }
 }
 
