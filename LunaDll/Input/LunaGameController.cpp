@@ -889,11 +889,16 @@ void LunaGameController::controllerButtonEvent(const SDL_ControllerButtonEvent& 
     default:
         break;
     }
-    
-    std::shared_ptr<Event> controllerEventButton = std::make_shared<Event>("onControllerButtonEvent", false);
-    controllerEventButton->setDirectEventName("onControllerButtonEvent");
-    controllerEventButton->setLoopable(false);
-    gLunaLua.callEvent(controllerEventButton, event.button, down);
+
+#if !defined(BUILDING_SMBXLAUNCHER)
+    if (gLunaLua.isValid()) {
+        std::shared_ptr<Event> controllerEventButton = std::make_shared<Event>("onControllerButtonEvent", false);
+        controllerEventButton->setDirectEventName("onControllerButtonEvent");
+        controllerEventButton->setLoopable(false);
+        gLunaLua.callEvent(controllerEventButton, event.button, down);
+    }
+#endif
+
 }
 
 
