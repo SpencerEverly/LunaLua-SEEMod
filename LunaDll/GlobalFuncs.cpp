@@ -1131,15 +1131,12 @@ static int fetchhead_ref_cb(const char *name, const char *url, const git_oid *oi
     return 0;
 }
 
-void doGitPull(std::string shaTemp, std::string pathTemp)
+void doGitPull(std::string pathTemp)
 {
-    const char *sha = shaTemp.c_str();
-    int error = git_oid_fromstr( &branchOidToMerge, sha );
-    
     git_repository *repo = NULL;
     git_remote *remote;
 
-    error = git_repository_open( &repo, pathTemp.c_str() );
+    int error = git_repository_open( &repo, pathTemp.c_str() );
 
     error = git_remote_lookup( &remote, repo, "origin main" );
 

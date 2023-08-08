@@ -252,6 +252,6 @@ static int fetchhead_ref_cb(const char *name, const char *url, const git_oid *oi
 
 void doGitInit();
 void doGitClone(std::string urlTemp, std::string pathTemp);
-void doGitPull(std::string shaTemp, std::string pathTemp);
+void doGitPull(std::string pathTemp);
 
 #endif
