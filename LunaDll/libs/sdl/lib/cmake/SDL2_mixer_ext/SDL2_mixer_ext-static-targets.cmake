@@ -7,7 +7,7 @@ if(CMAKE_VERSION VERSION_LESS "2.8.3")
    message(FATAL_ERROR "CMake >= 2.8.3 required")
 endif()
 cmake_policy(PUSH)
-cmake_policy(VERSION 2.8.3...3.24)
+cmake_policy(VERSION 2.8.3...3.25)
 #----------------------------------------------------------------
 # Generated CMake target import file.
 #----------------------------------------------------------------
@@ -60,7 +60,7 @@ add_library(SDL2_mixer_ext::SDL2_mixer_ext_Static STATIC IMPORTED)
 
 set_target_properties(SDL2_mixer_ext::SDL2_mixer_ext_Static PROPERTIES
   INTERFACE_INCLUDE_DIRECTORIES "${_IMPORT_PREFIX}/include/SDL2"
-  INTERFACE_LINK_LIBRARIES "opusfiled;opusd;wavpackd;modplugd;libxmp-staticd;gmed;zlibd;ADLMIDId;OPNMIDId;EDMIDId;timidity_sdl2d;fluidlited;vorbisfiled;vorbisd;winmm;oggd;SDL2d"
+  INTERFACE_LINK_LIBRARIES "E:/Github/AudioCodecs/build/out/lib/opusfile.lib;E:/Github/AudioCodecs/build/out/lib/opus.lib;E:/Github/AudioCodecs/build/out/lib/opus.lib;E:/Github/AudioCodecs/build/out/lib/wavpack.lib;E:/Github/AudioCodecs/build/out/lib/wavpack.lib;E:/Github/AudioCodecs/build/out/lib/modplug.lib;E:/Github/AudioCodecs/build/out/lib/libxmp-static.lib;E:/Github/AudioCodecs/build/out/lib/gme.lib;E:/Github/AudioCodecs/build/out/lib/zlib.lib;E:/Github/AudioCodecs/build/out/lib/ADLMIDI.lib;E:/Github/AudioCodecs/build/out/lib/OPNMIDI.lib;E:/Github/AudioCodecs/build/out/lib/EDMIDI.lib;E:/Github/AudioCodecs/build/out/lib/timidity_sdl2.lib;E:/Github/AudioCodecs/build/out/lib/fluidlite.lib;E:/Github/AudioCodecs/build/out/lib/vorbisfile.lib;E:/Github/AudioCodecs/build/out/lib/vorbis.lib;winmm;E:/Github/AudioCodecs/build/out/lib/ogg.lib;E:/Github/AudioCodecs/build/out/lib/SDL2.lib"
 )
 
 if(CMAKE_VERSION VERSION_LESS 2.8.12)

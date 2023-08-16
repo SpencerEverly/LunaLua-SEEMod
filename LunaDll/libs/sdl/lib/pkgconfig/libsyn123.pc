@@ -1,7 +1,7 @@
-prefix=E:/Github/SDL-Mixer-X/build
-exec_prefix=E:/Github/SDL-Mixer-X/build
-libdir=E:/Github/SDL-Mixer-X/build/lib
-includedir=E:/Github/SDL-Mixer-X/build/include
+prefix=E:/Github/AudioCodecs/build/out
+exec_prefix=E:/Github/AudioCodecs/build/out
+libdir=E:/Github/AudioCodecs/build/out/lib
+includedir=E:/Github/AudioCodecs/build/out/include
 
 Name: libsyn123
 Description: A signal synthesis library accompanying mpg123

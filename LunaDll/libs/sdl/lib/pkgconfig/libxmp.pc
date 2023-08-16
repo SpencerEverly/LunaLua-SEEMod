@@ -1,11 +1,11 @@
-prefix=E:/Github/SDL-Mixer-X/build
+prefix=E:/Github/AudioCodecs/build/out
 exec_prefix=${prefix}
-libdir=E:/Github/SDL-Mixer-X/build/lib
-includedir=E:/Github/SDL-Mixer-X/build/include
+libdir=E:/Github/AudioCodecs/build/out/lib
+includedir=E:/Github/AudioCodecs/build/out/include
 
 Name: libxmp
 Description: Xmp module player library
-Version: 4.5.1
+Version: 4.6.0
 
 Requires:
 Libs: -L${libdir} -lxmp
